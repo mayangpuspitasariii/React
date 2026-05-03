@@ -1,30 +1,33 @@
 import { useState } from "react";
-import Header from "./components/Header";
 
-function App() {
-  const [likes, setLikes] = useState(0);
-
-  function handleTambah() {
-    setLikes(likes + 1);
-  }
-
-  function handleKurang() {
-    setLikes(likes - 1);
-  }
-
-  function handleReset() {
-    setLikes(0);
-  }
-
+function Square({ value, onSquareClick }) {
   return (
-    <div>
-      <Header />
-      <button onClick={handleTambah}>+</button>
-      <p>{likes}</p>
-      <button onClick={handleKurang}>-</button>
-      <button onClick={handleReset}>Reset Angka</button>
-    </div>
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
   );
 }
 
-export default App;
+export default function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  function handleClick(i) {
+    const nextSquare = squares.slice();
+    nextSquare[i] = "X";
+    setSquares(nextSquare);
+  }
+
+  return (
+    <div className="board">
+      <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+      <Square value={squares[1]} />
+      <Square value={squares[2]} />
+      <Square value={squares[3]} />
+      <Square value={squares[4]} />
+      <Square value={squares[5]} />
+      <Square value={squares[6]} />
+      <Square value={squares[7]} />
+      <Square value={squares[8]} />
+    </div>
+  );
+}
